@@ -1,10 +1,28 @@
 import { Link } from 'react-router-dom';
 import img from '../../assets/images/login/login.svg';
+import { useContext } from 'react';
+import { AuthContext } from '../../providers/AuthProvider';
+import { Result } from 'postcss';
 
 const SignUp = () => {
 
+    const { createUser } = useContext(AuthContext);
+
     const handleSignUp = event => {
         event.preventDefault();
+        const form = event.target;
+        const name = form.name.value;
+        const email = form.email.value;
+        const password = form.password.value;
+        console.log(name, email, password);
+
+        createUser(email, password)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+
+            })
+            .then(error=>console.log(error))
     }
 
 
@@ -34,10 +52,8 @@ const SignUp = () => {
                             <label className="label">
                                 <span className="label-text">Email</span>
                             </label>
-                            <input type="password" name='password' placeholder="password" className="input input-bordered" required />
-                            <label className="label">
-                                <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
-                            </label>
+                            <input type="email" name='email' placeholder="email" className="input input-bordered" required />
+                           
                         </div>
 
 
